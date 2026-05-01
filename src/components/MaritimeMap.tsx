@@ -11,18 +11,18 @@ const oceanIcon = new L.DivIcon({
 })
 
 export const MaritimeMap = () => {
-  const center: [number, number] = [28.5, -12.0]
+  const center: [number, number] = [28.0, -20.0]
   
   const strikes = [
-    { id: "STRK-01", pos: [28.4, -12.1] as [number, number], session: "VOYAGE-712", date: "2026.04.12" },
-    { id: "STRK-02", pos: [28.8, -12.5] as [number, number], session: "VOYAGE-712", date: "2026.04.12" },
-    { id: "STRK-03", pos: [29.1, -11.8] as [number, number], session: "VOYAGE-804", date: "2026.04.18" },
+    { id: "STRK-01", pos: [27.5, -19.8] as [number, number], session: "VOYAGE-712", date: "2026.04.12" },
+    { id: "STRK-02", pos: [28.2, -20.5] as [number, number], session: "VOYAGE-712", date: "2026.04.12" },
+    { id: "STRK-03", pos: [29.0, -19.0] as [number, number], session: "VOYAGE-804", date: "2026.04.18" },
   ]
 
   const voyagePath: [number, number][] = [
-    [28.4, -12.1],
-    [28.6, -12.3],
-    [28.8, -12.5]
+    [27.5, -19.8],
+    [27.8, -20.1],
+    [28.2, -20.5]
   ]
 
   return (

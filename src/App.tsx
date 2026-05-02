@@ -16,7 +16,13 @@ function App() {
         <CatchIntelligence />
       </main>
       <footer className="footer">
-        <p>&copy; 2026 OceanSchema. Professional Maritime Systems.</p>
+        <div className="footer-content">
+          <p>&copy; 2026 OceanSchema. All Rights Reserved.</p>
+          <nav className="footer-links">
+            <a href="#privacy">Privacy</a>
+            <a href="#terms">Terms</a>
+          </nav>
+        </div>
       </footer>
     </div>
   )

@@ -1,10 +1,10 @@
 export const Navbar = () => {
   return (
-    <nav className="navbar glass">
+    <header className="navbar glass">
       <div className="nav-content">
         <div className="logo">
           <span className="logo-icon">⚓</span>
-          <span className="logo-text">OceanSchema</span>
+          <h1 className="logo-text">OceanSchema</h1>
         </div>
         <div className="nav-links">
           <a href="#features">The Advantage</a>

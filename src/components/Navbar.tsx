@@ -56,6 +56,6 @@ export const Navbar = () => {
           opacity: 1;
         }
       `}</style>
-    </nav>
+    </header>
   )
 }

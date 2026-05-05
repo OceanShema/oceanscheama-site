@@ -34,11 +34,14 @@ export const About = () => {
           max-width: 1100px;
           margin: 0 auto;
         }
+        .about-content {
+          text-align: center;
+        }
         .about-text {
           font-size: 1.5rem;
           opacity: 0.8;
           line-height: 1.6;
-          margin-bottom: 60px;
+          margin: 0 auto 60px;
           max-width: 800px;
         }
         .about-grid {

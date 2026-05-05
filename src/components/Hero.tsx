@@ -2,19 +2,19 @@ export const Hero = () => {
   return (
     <section className="hero">
       <div className="hero-content">
-        <div className="badge glass">Maritime Operational Ledger</div>
+        <div className="badge glass">Ocean Data & AI Company</div>
         <h1 className="hero-title">
-          Eliminate <span className="text-gradient">Decay</span>.<br />
-          Capture <span className="text-gradient">Success</span>.
+          Intelligence for the <br />
+          <span className="text-gradient">Deep Sea</span>.
         </h1>
         <p className="hero-subtitle">
-          OceanSchema is the world’s first high-fidelity operational ledger for the deep sea. 
-          Stop losing the "unseen" variables of your voyages to memory or signal failure. 
-          Convert every nautical vector into a permanent, proprietary database of success.
+          We are the global leader in high-fidelity ocean data and predictive AI. 
+          By decoding the unseen variables of the marine frontier, we power the next 
+          generation of maritime operations with surgical precision.
         </p>
         <div className="hero-actions">
-          <a href="#access" className="btn-primary">Secure Your Ledger</a>
-          <button className="btn-secondary">The Data Bridge</button>
+          <a href="#about" className="btn-primary">Explore the Intelligence</a>
+          <a href="#vision" className="btn-secondary">Current Applications</a>
         </div>
       </div>
       

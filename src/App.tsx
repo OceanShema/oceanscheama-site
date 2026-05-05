@@ -1,4 +1,7 @@
 import { Hero } from './components/Hero'
+import { About } from './components/About'
+import { IndustryFocus } from './components/IndustryFocus'
+import { Philosophy } from './components/Philosophy'
 import { Features } from './components/Features'
 import { Navbar } from './components/Navbar'
 import { MaritimeMap } from './components/MaritimeMap'
@@ -9,10 +12,13 @@ function App() {
   return (
     <div className="app-container">
       <Navbar />
-      <main>
-        <Hero />
-        <Features />
-        <MaritimeMap />
+                      <main>
+                        <Hero />
+                        <About />
+                        <IndustryFocus />
+                        <Philosophy />
+                        <Features />
+                      <MaritimeMap />
         <CatchIntelligence />
       </main>
       <footer className="footer">

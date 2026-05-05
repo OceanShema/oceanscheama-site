@@ -1,145 +1,191 @@
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
+import { useState, useMemo } from 'react'
+import { MapContainer, TileLayer, Marker, Polyline, Tooltip } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
-// Custom marker icon to match OceanSchema branding
-const oceanIcon = new L.DivIcon({
+// Custom marker icon for Profit Points (Professional Dots)
+const moneyIcon = new L.DivIcon({
   className: 'custom-div-icon',
-  html: "<div style='background-color: #2dd4bf; width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 10px #2dd4bf; border: 2px solid white;'></div>",
+  html: "<div style='background-color: #0d9488; width: 10px; height: 10px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 10px rgba(13, 148, 136, 0.3);'></div>",
   iconSize: [10, 10],
   iconAnchor: [5, 5]
 })
 
-export const MaritimeMap = () => {
-  // Center moved to Mid-Atlantic (Total Isolation Zone)
-  const center: [number, number] = [38.0, -45.0]
-  
-  // Generating 50 proprietary strike nodes in the Deep-Sea Atlantic Theater
-  // Range: Lat [35, 42], Lng [-52, -38]
-  const strikes = [
-    { id: "STRK-01", pos: [38.5, -44.8] as [number, number], session: "VOYAGE-712", date: "2026.04.01" },
-    { id: "STRK-02", pos: [39.2, -45.5] as [number, number], session: "VOYAGE-712", date: "2026.04.02" },
-    { id: "STRK-03", pos: [40.0, -43.0] as [number, number], session: "VOYAGE-804", date: "2026.04.05" },
-    { id: "STRK-04", pos: [37.5, -46.2] as [number, number], session: "VOYAGE-705", date: "2026.04.06" },
-    { id: "STRK-05", pos: [38.1, -42.5] as [number, number], session: "VOYAGE-804", date: "2026.04.08" },
-    { id: "STRK-06", pos: [40.5, -46.8] as [number, number], session: "VOYAGE-910", date: "2026.04.10" },
-    { id: "STRK-07", pos: [39.8, -45.1] as [number, number], session: "VOYAGE-712", date: "2026.04.12" },
-    { id: "STRK-08", pos: [38.9, -43.3] as [number, number], session: "VOYAGE-815", date: "2026.04.15" },
-    { id: "STRK-09", pos: [37.8, -45.7] as [number, number], session: "VOYAGE-705", date: "2026.04.18" },
-    { id: "STRK-10", pos: [39.4, -46.5] as [number, number], session: "VOYAGE-910", date: "2026.04.20" },
-    { id: "STRK-11", pos: [40.2, -42.9] as [number, number], session: "VOYAGE-804", date: "2026.04.22" },
-    { id: "STRK-12", pos: [38.3, -45.4] as [number, number], session: "VOYAGE-712", date: "2026.04.25" },
-    { id: "STRK-13", pos: [39.1, -44.7] as [number, number], session: "VOYAGE-815", date: "2026.04.28" },
-    { id: "STRK-14", pos: [37.9, -46.1] as [number, number], session: "VOYAGE-705", date: "2026.05.01" },
-    { id: "STRK-15", pos: [40.7, -45.5] as [number, number], session: "VOYAGE-910", date: "2026.05.03" },
-    { id: "STRK-16", pos: [39.5, -41.2] as [number, number], session: "VOYAGE-804", date: "2026.05.05" },
-    { id: "STRK-17", pos: [38.7, -44.9] as [number, number], session: "VOYAGE-712", date: "2026.05.08" },
-    { id: "STRK-18", pos: [39.3, -45.8] as [number, number], session: "VOYAGE-815", date: "2026.05.10" },
-    { id: "STRK-19", pos: [37.6, -46.4] as [number, number], session: "VOYAGE-705", date: "2026.05.12" },
-    { id: "STRK-20", pos: [40.4, -43.5] as [number, number], session: "VOYAGE-910", date: "2026.05.15" },
-    { id: "STRK-21", pos: [39.9, -42.7] as [number, number], session: "VOYAGE-804", date: "2026.05.18" },
-    { id: "STRK-22", pos: [38.2, -45.2] as [number, number], session: "VOYAGE-712", date: "2026.05.20" },
-    { id: "STRK-23", pos: [39.0, -44.6] as [number, number], session: "VOYAGE-815", date: "2026.05.22" },
-    { id: "STRK-24", pos: [37.4, -46.0] as [number, number], session: "VOYAGE-705", date: "2026.05.25" },
-    { id: "STRK-25", pos: [40.8, -46.3] as [number, number], session: "VOYAGE-910", date: "2026.05.28" },
-    { id: "STRK-26", pos: [39.6, -43.4] as [number, number], session: "VOYAGE-804", date: "2026.06.01" },
-    { id: "STRK-27", pos: [38.4, -44.5] as [number, number], session: "VOYAGE-712", date: "2026.06.03" },
-    { id: "STRK-28", pos: [39.2, -45.3] as [number, number], session: "VOYAGE-815", date: "2026.06.05" },
-    { id: "STRK-29", pos: [37.3, -45.9] as [number, number], session: "VOYAGE-705", date: "2026.06.08" },
-    { id: "STRK-30", pos: [40.5, -44.2] as [number, number], session: "VOYAGE-910", date: "2026.06.10" },
-    { id: "STRK-31", pos: [39.8, -43.5] as [number, number], session: "VOYAGE-804", date: "2026.06.12" },
-    { id: "STRK-32", pos: [38.1, -45.6] as [number, number], session: "VOYAGE-712", date: "2026.06.15" },
-    { id: "STRK-33", pos: [39.0, -44.9] as [number, number], session: "VOYAGE-815", date: "2026.06.18" },
-    { id: "STRK-34", pos: [37.2, -46.5] as [number, number], session: "VOYAGE-705", date: "2026.06.20" },
-    { id: "STRK-35", pos: [40.9, -45.8] as [number, number], session: "VOYAGE-910", date: "2026.06.22" },
-    { id: "STRK-36", pos: [39.4, -42.1] as [number, number], session: "VOYAGE-804", date: "2026.06.25" },
-    { id: "STRK-37", pos: [38.6, -44.2] as [number, number], session: "VOYAGE-712", date: "2026.06.28" },
-    { id: "STRK-38", pos: [39.3, -45.6] as [number, number], session: "VOYAGE-815", date: "2026.07.01" },
-    { id: "STRK-39", pos: [37.7, -46.8] as [number, number], session: "VOYAGE-705", date: "2026.07.03" },
-    { id: "STRK-40", pos: [40.3, -44.8] as [number, number], session: "VOYAGE-910", date: "2026.07.05" },
-    { id: "STRK-41", pos: [39.7, -43.9] as [number, number], session: "VOYAGE-804", date: "2026.07.08" },
-    { id: "STRK-42", pos: [38.0, -45.1] as [number, number], session: "VOYAGE-712", date: "2026.07.10" },
-    { id: "STRK-43", pos: [39.1, -44.5] as [number, number], session: "VOYAGE-815", date: "2026.07.12" },
-    { id: "STRK-44", pos: [37.5, -46.3] as [number, number], session: "VOYAGE-705", date: "2026.07.15" },
-    { id: "STRK-45", pos: [40.6, -46.1] as [number, number], session: "VOYAGE-910", date: "2026.07.18" },
-    { id: "STRK-46", pos: [39.5, -43.6] as [number, number], session: "VOYAGE-804", date: "2026.07.20" },
-    { id: "STRK-47", pos: [38.8, -44.4] as [number, number], session: "VOYAGE-712", date: "2026.07.22" },
-    { id: "STRK-48", pos: [39.4, -45.9] as [number, number], session: "VOYAGE-815", date: "2026.07.25" },
-    { id: "STRK-49", pos: [37.1, -46.7] as [number, number], session: "VOYAGE-705", date: "2026.07.28" },
-    { id: "STRK-50", pos: [40.2, -44.1] as [number, number], session: "VOYAGE-910", date: "2026.08.01" },
-  ]
+// Custom icon for the Command Center (Home Port)
+const homeIcon = new L.DivIcon({
+  className: 'custom-div-icon',
+  html: "<div style='font-size: 24px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));'>🏠</div>",
+  iconSize: [30, 30],
+  iconAnchor: [15, 15]
+})
 
-  const voyagePath: [number, number][] = [
-    [38.5, -44.8], [39.0, -45.1], [39.5, -45.5], [40.0, -45.8], [40.5, -46.2]
-  ]
+// Helper to calculate distance in KM
+const getDistance = (p1: [number, number], p2: [number, number]) => {
+  const R = 6371; // Earth's radius in km
+  const dLat = (p2[0] - p1[0]) * Math.PI / 180;
+  const dLon = (p2[1] - p1[1]) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(p1[0] * Math.PI / 180) * Math.cos(p2[0] * Math.PI / 180) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return Math.round(R * c);
+}
+
+// Helper to generate realistic strikes (Specifically tuned to stay in deep water)
+const generateStrikes = (port: any, count: number, speciesList: string[], prefix: string) => {
+  const methods = ["Bottom Trawling", "Longlining", "Handlining", "Potting (Traps)", "Gillnetting"];
+  
+  return Array.from({ length: count }).map((_, i) => {
+    // Tighten latitude and push longitude further offshore
+    let latOffset = (Math.random() - 0.5) * 3; 
+    let lngOffset = (Math.random() * 6) + 3; // Minimum 3 degrees offshore
+    
+    // Extra safety for Halifax to avoid Nova Scotia / PEI coastlines
+    if (prefix === "NS") {
+      latOffset = (Math.random() * -3) - 0.5; // Always South of Halifax
+      lngOffset = (Math.random() * 7) + 2.5;  // East into the Atlantic
+    }
+
+    const strikePos: [number, number] = [port.pos[0] + latOffset, port.pos[1] + lngOffset];
+    const fuel = Math.floor(200 + Math.random() * 600);
+    const distanceKm = getDistance(port.pos, strikePos);
+    const species = speciesList[Math.floor(Math.random() * speciesList.length)];
+    
+    // Determine category based on species or index
+    const isTrap = species.toLowerCase().includes('lobster') || species.toLowerCase().includes('crab');
+    const isMethodology = i % 5 === 0;
+
+    return {
+      id: `${prefix}-${i}`,
+      name: isMethodology ? `${methods[i % methods.length]}` : species,
+      type: isMethodology ? 'GEAR' : (isTrap ? 'TRAP' : 'FISH'),
+      method: isMethodology ? "Direct Strategy" : methods[Math.floor(Math.random() * methods.length)],
+      pos: strikePos,
+      date: `May ${Math.floor(Math.random() * 28) + 1}, 2026`,
+      fuel: `${fuel}L`,
+      distance: distanceKm,
+      port: port
+    };
+  });
+}
+
+const nlSpecies = ["Bluefin Tuna (XL)", "Atlantic Cod School", "Snow Crab Cluster", "Greenland Halibut", "Redfish Strike"];
+const nsSpecies = ["Jumbo Lobster Bed", "Haddock Goldmine", "Scallop Bed (Prime)", "Swordfish Strike", "Pollock Run"];
+
+export const MaritimeMap = () => {
+  const [hoveredStrike, setHoveredStrike] = useState<any>(null)
+  
+  const PORTS = {
+    ST_JOHNS: { name: "ST. JOHN'S COMMAND", pos: [47.5675, -52.7076] as [number, number] },
+    HALIFAX: { name: "HALIFAX COMMAND", pos: [44.6488, -63.5752] as [number, number] }
+  }
+
+  // Use useMemo to ensure strikes are generated once and don't change on hover
+  const strikes = useMemo(() => [
+    ...generateStrikes(PORTS.ST_JOHNS, 25, nlSpecies, "NL"),
+    ...generateStrikes(PORTS.HALIFAX, 25, nsSpecies, "NS")
+  ], []);
+
+  const center: [number, number] = [45.0, -58.0]
 
   return (
     <section id="map" className="map-section">
       <div className="section-header">
-        <h2 className="section-title">The <span className="text-gradient">Operational Map</span></h2>
-        <p className="section-subtitle">A robust visualization of 50 proprietary strike nodes across the deep Atlantic grid.</p>
+        <h2 className="section-title">The <span className="text-gradient">Profit Map</span></h2>
+        <p className="section-subtitle" style={{ color: '#475569' }}>Visualize the straightest line between your home port and your biggest paydays.</p>
       </div>
 
-      <div className="map-wrapper glass">
+      <div className="map-wrapper" style={{ border: '4px solid white', borderRadius: '24px', boxShadow: '0 20px 50px rgba(0,0,0,0.1)' }}>
         <MapContainer 
           center={center} 
-          zoom={6} 
-          scrollWheelZoom={true} 
-          style={{ height: '700px', width: '100%', borderRadius: '16px' }}
+          zoom={5} 
+          scrollWheelZoom={false} 
+          style={{ height: '700px', width: '100%', borderRadius: '20px' }}
         >
+          {/* Light Mode Tiles */}
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
           />
 
-          <Polyline positions={voyagePath} pathOptions={{ color: '#2dd4bf', weight: 2, dashArray: '5, 10' }} />
+          {/* Command Centers */}
+          {Object.values(PORTS).map((p, i) => (
+            <Marker key={i} position={p.pos} icon={homeIcon}>
+              <Tooltip permanent direction="top" offset={[0, -10]}>
+                <span style={{ fontWeight: 800, color: '#0f172a' }}>{p.name}</span>
+              </Tooltip>
+            </Marker>
+          ))}
+
+          {/* Connection Line on Hover to the correct port - interactive: false prevents flickering */}
+          {hoveredStrike && (
+            <Polyline 
+              positions={[hoveredStrike.port.pos, hoveredStrike.pos]} 
+              pathOptions={{ color: '#0d9488', weight: 3, dashArray: '10, 10', opacity: 0.6, interactive: false }} 
+            />
+          )}
 
           {strikes.map((s) => (
-            <Marker key={s.id} position={s.pos} icon={oceanIcon}>
-              <Popup>
+            <Marker 
+              key={s.id} 
+              position={s.pos} 
+              icon={moneyIcon}
+              eventHandlers={{
+                mouseover: (e) => {
+                  setHoveredStrike(s);
+                  e.target.openTooltip();
+                },
+                mouseout: (e) => {
+                  setHoveredStrike(null);
+                  e.target.closeTooltip();
+                },
+              }}
+            >
+              <Tooltip direction="top" offset={[0, -10]} opacity={1}>
                 <div className="map-popup">
-                  <div className="popup-header">LEDGER ENTRY: {s.id}</div>
-                  <div className="popup-row"><span>SESSION:</span> {s.session}</div>
-                  <div className="popup-row"><span>TEMPORAL:</span> {s.date}</div>
-                  <div className="popup-row"><span>STATUS:</span> HARDENED</div>
+                  <div className="popup-header">PROFIT SUMMARY</div>
+                  <div className="popup-row"><span>{s.type === 'GEAR' ? 'METHOD:' : 'CATCH:'}</span> <strong>{s.name}</strong></div>
+                  <div className="popup-row"><span>GEAR:</span> {s.method}</div>
+                  <div className="popup-row"><span>DISTANCE:</span> <strong>{s.distance} KM / {Math.round(s.distance * 0.54)} NM</strong></div>
+                  <div className="popup-row"><span>VOYAGE BURN:</span> <strong style={{ color: '#0d9488' }}>{s.fuel} (To & Fro)</strong></div>
+                  <div className="popup-row" style={{ marginTop: '8px', fontSize: '0.7rem', fontStyle: 'italic', color: '#64748b' }}>
+                    Surgical strike confirmed.
+                  </div>
                 </div>
-              </Popup>
+              </Tooltip>
             </Marker>
           ))}
         </MapContainer>
       </div>
 
       <style>{`
-        .map-section { padding-top: 100px; }
-        .map-wrapper {
-          margin-top: 40px;
-          padding: 10px;
-          border: 1px solid var(--glass-border);
-          overflow: hidden;
-        }
-        .leaflet-container {
-          background: #000b1a !important;
-        }
+        .map-section { padding-top: 100px; padding-bottom: 100px; }
         .map-popup {
-          color: #000b1a;
+          color: #0f172a;
           font-family: 'Inter', sans-serif;
+          min-width: 180px;
         }
         .popup-header {
           font-weight: 800;
-          font-size: 0.7rem;
-          color: #003366;
-          border-bottom: 1px solid #eee;
-          padding-bottom: 5px;
-          margin-bottom: 8px;
+          font-size: 0.75rem;
+          color: #0d9488;
+          border-bottom: 1px solid #e2e8f0;
+          padding-bottom: 8px;
+          margin-bottom: 10px;
           letter-spacing: 1px;
         }
         .popup-row {
-          font-size: 0.8rem;
-          margin-bottom: 4px;
+          font-size: 0.9rem;
+          margin-bottom: 6px;
         }
         .popup-row span {
           font-weight: 600;
           opacity: 0.6;
+          margin-right: 8px;
+        }
+        .leaflet-container {
+          background: #f8fafc !important;
         }
       `}</style>
     </section>

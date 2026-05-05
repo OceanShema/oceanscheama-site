@@ -2,8 +2,8 @@ export const Demo = () => {
   return (
     <section id="vision" className="demo-section">
       <div className="section-header">
-        <h2 className="section-title">The <span className="text-gradient">Success Loop</span></h2>
-        <p className="section-subtitle">How OceanSchema transforms raw ocean variables into proprietary strategic assets.</p>
+        <h2 className="section-title">The <span className="text-gradient">Profit Loop</span></h2>
+        <p className="section-subtitle">How OceanSchema simplifies your life on the water while maximizing your take-home pay.</p>
       </div>
 
       <div className="demo-container glass">
@@ -23,12 +23,12 @@ export const Demo = () => {
             {/* Moving Radar Line */}
             <line x1="200" y1="200" x2="200" y2="20" stroke="var(--seafoam)" strokeWidth="2" className="radar-sweep" />
             
-            {/* Abstract "Success Points" */}
+            {/* Abstract "Profit Points" */}
             <circle cx="120" cy="150" r="4" fill="var(--water)" className="point p1" />
             <circle cx="280" cy="100" r="6" fill="var(--seafoam)" className="point p2" />
             <circle cx="220" cy="300" r="5" fill="var(--water)" className="point p3" />
             
-            {/* Glowing Success Zone */}
+            {/* Glowing Money Zone */}
             <circle cx="280" cy="100" r="30" fill="url(#radarGrad)" className="zone-glow" />
           </svg>
         </div>
@@ -36,18 +36,18 @@ export const Demo = () => {
         <div className="demo-content">
           <div className="step">
             <div className="step-num">01</div>
-            <h4>Local Hardening</h4>
-            <p>Data is instantly secured in a local vault. No signal required. No data decay. Absolute operational continuity.</p>
+            <h4>Eyes on the Water</h4>
+            <p>Log your strikes with a single tap. No more notebooks, no more delays. Stay focused on the fishing while the app quietly builds your profit map in the background.</p>
           </div>
           <div className="step">
             <div className="step-num">02</div>
-            <h4>The Intelligence Bridge</h4>
-            <p>As you approach the horizon, OceanSchema automatically propagates your local ledger to the secure cloud bridge.</p>
+            <h4>Fleet Coordination</h4>
+            <p>Back at the dock, your data is already waiting. Coordinate with your fleet or review your day instantly without lifting a finger. Your office work is done before you hit the harbor.</p>
           </div>
           <div className="step">
             <div className="step-num">03</div>
-            <h4>Digital Permanence</h4>
-            <p>Your expertise is now a permanent asset. Searchable, secure, and ready to inform your next strategic strike.</p>
+            <h4>Compound Your Earnings</h4>
+            <p>The more you fish, the smarter you get. Review past seasons to see exactly which conditions led to your biggest paydays. Turn every voyage into a masterclass in profitability.</p>
           </div>
         </div>
       </div>

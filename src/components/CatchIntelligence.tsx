@@ -4,10 +4,10 @@ export const CatchIntelligence = () => {
   const [activeNode, setActiveNode] = useState(0)
 
   const catches = [
-    { id: 1, x: 25, y: 30, date: "2026.04.12", session: "VOYAGE-001", loc: "28.4N / 12.1W" },
-    { id: 2, x: 65, y: 45, date: "2026.04.18", session: "VOYAGE-003", loc: "29.1N / 11.8W" },
-    { id: 3, x: 40, y: 70, date: "2026.04.25", session: "VOYAGE-003", loc: "28.8N / 12.5W" },
-    { id: 4, x: 80, y: 20, date: "2026.05.01", session: "VOYAGE-005", loc: "30.2N / 10.9W" },
+    { id: 1, x: 25, y: 30, date: "May 12", value: "$12,400", prob: "94%", loc: "Grand Banks Alpha" },
+    { id: 2, x: 65, y: 45, date: "May 18", value: "$8,900", prob: "88%", loc: "Scotian Shelf Beta" },
+    { id: 3, x: 40, y: 70, date: "May 25", value: "$15,200", prob: "91%", loc: "Emerald Basin" },
+    { id: 4, x: 80, y: 20, date: "June 01", value: "$11,100", prob: "96%", loc: "Laurentian Channel" },
   ]
 
   useEffect(() => {
@@ -20,8 +20,8 @@ export const CatchIntelligence = () => {
   return (
     <section id="intelligence" className="intel-section">
       <div className="section-header">
-        <h2 className="section-title">The <span className="text-gradient">Intelligence Map</span></h2>
-        <p className="section-subtitle">Real-time synthesis of environmental vectors and temporal strike data.</p>
+        <h2 className="section-title">The <span className="text-gradient">Strategy Command</span></h2>
+        <p className="section-subtitle">Turn your history into a predictive engine. See the profit before you even leave the dock.</p>
       </div>
 
       <div className="intel-map-container glass">
@@ -39,16 +39,16 @@ export const CatchIntelligence = () => {
               {/* Data HUD */}
               <div className="node-hud glass">
                 <div className="hud-line">
-                  <span className="label">TEMPORAL</span>
-                  <span className="value">{c.date}</span>
-                </div>
-                <div className="hud-line">
-                  <span className="label">SESSION</span>
-                  <span className="value">{c.session}</span>
-                </div>
-                <div className="hud-line">
-                  <span className="label">SPATIAL</span>
+                  <span className="label">TARGET ZONE</span>
                   <span className="value">{c.loc}</span>
+                </div>
+                <div className="hud-line">
+                  <span className="label">EST. MARKET VALUE</span>
+                  <span className="value" style={{ color: '#2dd4bf', fontWeight: 'bold' }}>{c.value}</span>
+                </div>
+                <div className="hud-line">
+                  <span className="label">STRIKE PROBABILITY</span>
+                  <span className="value">{c.prob}</span>
                 </div>
               </div>
             </div>
@@ -61,11 +61,11 @@ export const CatchIntelligence = () => {
         <div className="map-legend">
           <div className="legend-item">
             <span className="dot active"></span>
-            <span>Active Synthesis</span>
+            <span>High-Probability Strike</span>
           </div>
           <div className="legend-item">
             <span className="dot"></span>
-            <span>Archived Strike</span>
+            <span>Historical Success Area</span>
           </div>
         </div>
       </div>

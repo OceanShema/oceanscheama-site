@@ -1,24 +1,24 @@
 export const Features = () => {
   const features = [
     {
-      title: "Sovereign Hardening",
-      desc: "Absolute reliability in total isolation. Your data is hardened in a local SQLite vault the moment it's captured, ensuring zero-loss operations 100 miles offshore.",
-      icon: "🛡️"
+      title: "Uninterrupted Focus",
+      desc: "Stop wrestling with paperwork and signal drops. OceanSchema works silently in the background, letting you focus on the fish while it handles the details with 100% reliability.",
+      icon: "🎣"
     },
     {
-      title: "The Intelligence Bridge",
-      desc: "Seamlessly bridge the gap between sea and shore. Our intelligent synchronization propagates local logs to a secure PostgreSQL cloud the moment a tether is found.",
-      icon: "⚡"
+      title: "Fuel-to-Strike Mastery",
+      desc: "Stop burning money on empty water. Automatically correlate your fuel consumption with catch volume to identify the exact spots that put the most money in your pocket.",
+      icon: "💰"
     },
     {
-      title: "Voyage Genealogy",
-      desc: "Connect every catch to its specific voyage session. Build a relational map of success that reveals the hidden patterns behind your most profitable strikes.",
-      icon: "🧬"
+      title: "Regulatory Freedom",
+      desc: "Keep the inspectors happy without lifting a finger. Automated tag tracking and compliance audits mean no more fines, no more delays, and more time on the water.",
+      icon: "⚖️"
     },
     {
-      title: "Nautical Precision",
-      desc: "Live sensor integration for absolute truth. Capture Speed (Kn), Heading (M), and GPS COG in real-time, directly into your operational ledger.",
-      icon: "🧭"
+      title: "The Wealth Map",
+      desc: "Turn every voyage into an investment. Build a private, permanent record of your most profitable strikes so you can return to the money year after year with surgical precision.",
+      icon: "🗺️"
     }
   ]
 

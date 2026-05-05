@@ -6,6 +6,7 @@ import { Features } from './components/Features'
 import { Navbar } from './components/Navbar'
 import { MaritimeMap } from './components/MaritimeMap'
 import { CatchIntelligence } from './components/CatchIntelligence'
+import { Contact } from './components/Contact'
 import './App.css'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
                         <Features />
                       <MaritimeMap />
         <CatchIntelligence />
+        <Contact />
       </main>
       <footer className="footer">
         <div className="footer-content">

@@ -3,12 +3,21 @@ import { MapContainer, TileLayer, Marker, Polyline, Tooltip } from 'react-leafle
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
-// Custom marker icon for Profit Points (Professional Dots)
-const moneyIcon = new L.DivIcon({
+// Custom marker icon for Profit Points (Professional Geometric Symbols)
+const getStrikeIcon = (type: string) => new L.DivIcon({
   className: 'custom-div-icon',
-  html: "<div style='background-color: #0d9488; width: 10px; height: 10px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 10px rgba(13, 148, 136, 0.3);'></div>",
-  iconSize: [10, 10],
-  iconAnchor: [5, 5]
+  html: `
+    <div style="
+      width: 12px; 
+      height: 12px; 
+      background-color: #0d9488; 
+      border: 2px solid white; 
+      box-shadow: 0 0 10px rgba(13, 148, 136, 0.4);
+      ${type === 'FISH' ? 'border-radius: 50%;' : type === 'TRAP' ? 'transform: rotate(45deg);' : 'clip-path: polygon(50% 0%, 0% 100%, 100% 100%);'}
+    "></div>
+  `,
+  iconSize: [12, 12],
+  iconAnchor: [6, 6]
 })
 
 // Custom icon for the Command Center (Professional Lighthouse/Tower)
@@ -139,7 +148,7 @@ export const MaritimeMap = () => {
             <Marker 
               key={s.id} 
               position={s.pos} 
-              icon={moneyIcon}
+              icon={getStrikeIcon(s.type)}
               eventHandlers={{
                 mouseover: (e) => {
                   setHoveredStrike(s);
@@ -166,10 +175,60 @@ export const MaritimeMap = () => {
             </Marker>
           ))}
         </MapContainer>
+        
+        {/* Map Legend */}
+        <div className="map-legend-overlay">
+          <div className="legend-title">COMMAND LEGEND</div>
+          <div className="legend-item"><span className="symbol circle"></span> Standard Catch</div>
+          <div className="legend-item"><span className="symbol diamond"></span> Trap Deployment</div>
+          <div className="legend-item"><span className="symbol triangle"></span> Operational Strategy</div>
+        </div>
       </div>
 
       <style>{`
         .map-section { padding-top: 100px; padding-bottom: 100px; }
+        .map-wrapper {
+          margin-top: 40px;
+          position: relative;
+        }
+        .map-legend-overlay {
+          position: absolute;
+          bottom: 30px;
+          right: 30px;
+          background: rgba(255, 255, 255, 0.9);
+          padding: 15px;
+          border-radius: 12px;
+          z-index: 1000;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+          border: 1px solid #e2e8f0;
+          font-family: 'Inter', sans-serif;
+        }
+        .legend-title {
+          font-size: 0.7rem;
+          font-weight: 800;
+          color: #64748b;
+          margin-bottom: 10px;
+          letter-spacing: 1px;
+        }
+        .legend-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          color: #0f172a;
+          margin-bottom: 6px;
+        }
+        .symbol {
+          width: 10px;
+          height: 10px;
+          background: #0d9488;
+          border: 1px solid white;
+        }
+        .symbol.circle { border-radius: 50%; }
+        .symbol.diamond { transform: rotate(45deg); }
+        .symbol.triangle { clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
+        
         .map-popup {
           color: #0f172a;
           font-family: 'Inter', sans-serif;

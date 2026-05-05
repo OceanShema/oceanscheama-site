@@ -157,7 +157,7 @@ export const MaritimeMap = () => {
             <Marker 
               key={s.id} 
               position={s.pos} 
-              icon={getStrikeIcon(s.type)}
+              icon={getStrikeIcon(s.type, s.age)}
               eventHandlers={{
                 mouseover: (e) => {
                   setHoveredStrike(s);

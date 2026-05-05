@@ -11,10 +11,19 @@ const moneyIcon = new L.DivIcon({
   iconAnchor: [5, 5]
 })
 
-// Custom icon for the Command Center (Home Port)
+// Custom icon for the Command Center (Professional Lighthouse/Tower)
 const homeIcon = new L.DivIcon({
   className: 'custom-div-icon',
-  html: "<div style='font-size: 24px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));'>🏠</div>",
+  html: `
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 0 8px rgba(13, 148, 136, 0.5));">
+      <path d="M12 2L15 8H9L12 2Z" fill="#0d9488"/>
+      <rect x="10" y="8" width="4" height="12" fill="#0f172a"/>
+      <rect x="9" y="18" width="6" height="2" fill="#0f172a"/>
+      <circle cx="12" cy="5" r="1.5" fill="#2dd4bf">
+        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" />
+      </circle>
+    </svg>
+  `,
   iconSize: [30, 30],
   iconAnchor: [15, 15]
 })

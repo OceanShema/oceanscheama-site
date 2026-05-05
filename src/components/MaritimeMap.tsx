@@ -3,9 +3,9 @@ import { MapContainer, TileLayer, Marker, Polyline, Tooltip } from 'react-leafle
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
-// Custom marker icon for Profit Points (Color-Coded by Age)
+// Custom marker icon for Profit Points (Color-Coded by Age - Shades of Blue)
 const getStrikeIcon = (type: string, age: number) => {
-  const colors = ["#2dd4bf", "#facc15", "#60a5fa"]; // Today, Yesterday, 2 Days Ago
+  const colors = ["#003366", "#3b82f6", "#93c5fd"]; // Dark Navy (Today), Ocean Blue (Yesterday), Sky Blue (2 Days Ago)
   const color = colors[age] || colors[2];
   
   return new L.DivIcon({
@@ -15,8 +15,8 @@ const getStrikeIcon = (type: string, age: number) => {
         width: 12px; 
         height: 12px; 
         background-color: ${color}; 
-        border: 2px solid white; 
-        box-shadow: 0 0 10px ${color}66;
+        border: 1px solid white; 
+        box-shadow: 0 0 8px ${color}88;
         ${type === 'FISH' ? 'border-radius: 50%;' : type === 'TRAP' ? 'transform: rotate(45deg);' : 'clip-path: polygon(50% 0%, 0% 100%, 100% 100%);'}
       "></div>
     `,
@@ -188,9 +188,9 @@ export const MaritimeMap = () => {
         {/* Map Legend */}
         <div className="map-legend-overlay">
           <div className="legend-title">STRIKE AGE</div>
-          <div className="legend-item"><span className="color-dot" style={{ backgroundColor: '#2dd4bf' }}></span> Today</div>
-          <div className="legend-item"><span className="color-dot" style={{ backgroundColor: '#facc15' }}></span> Yesterday</div>
-          <div className="legend-item"><span className="color-dot" style={{ backgroundColor: '#60a5fa' }}></span> 48 Hours Ago</div>
+          <div className="legend-item"><span className="color-dot" style={{ backgroundColor: '#003366' }}></span> Today</div>
+          <div className="legend-item"><span className="color-dot" style={{ backgroundColor: '#3b82f6' }}></span> Yesterday</div>
+          <div className="legend-item"><span className="color-dot" style={{ backgroundColor: '#93c5fd' }}></span> 48 Hours Ago</div>
           
           <div className="legend-title" style={{ marginTop: '12px' }}>GEAR TYPE</div>
           <div className="legend-item"><span className="symbol circle"></span> Standard Catch</div>

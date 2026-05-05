@@ -3,22 +3,27 @@ import { MapContainer, TileLayer, Marker, Polyline, Tooltip } from 'react-leafle
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
-// Custom marker icon for Profit Points (Professional Geometric Symbols)
-const getStrikeIcon = (type: string) => new L.DivIcon({
-  className: 'custom-div-icon',
-  html: `
-    <div style="
-      width: 12px; 
-      height: 12px; 
-      background-color: #0d9488; 
-      border: 2px solid white; 
-      box-shadow: 0 0 10px rgba(13, 148, 136, 0.4);
-      ${type === 'FISH' ? 'border-radius: 50%;' : type === 'TRAP' ? 'transform: rotate(45deg);' : 'clip-path: polygon(50% 0%, 0% 100%, 100% 100%);'}
-    "></div>
-  `,
-  iconSize: [12, 12],
-  iconAnchor: [6, 6]
-})
+// Custom marker icon for Profit Points (Color-Coded by Age)
+const getStrikeIcon = (type: string, age: number) => {
+  const colors = ["#2dd4bf", "#facc15", "#60a5fa"]; // Today, Yesterday, 2 Days Ago
+  const color = colors[age] || colors[2];
+  
+  return new L.DivIcon({
+    className: 'custom-div-icon',
+    html: `
+      <div style="
+        width: 12px; 
+        height: 12px; 
+        background-color: ${color}; 
+        border: 2px solid white; 
+        box-shadow: 0 0 10px ${color}66;
+        ${type === 'FISH' ? 'border-radius: 50%;' : type === 'TRAP' ? 'transform: rotate(45deg);' : 'clip-path: polygon(50% 0%, 0% 100%, 100% 100%);'}
+      "></div>
+    `,
+    iconSize: [12, 12],
+    iconAnchor: [6, 6]
+  });
+}
 
 // Custom icon for the Command Center (Professional Lighthouse/Tower)
 const homeIcon = new L.DivIcon({
@@ -53,16 +58,15 @@ const getDistance = (p1: [number, number], p2: [number, number]) => {
 // Helper to generate realistic strikes (Specifically tuned to stay in deep water)
 const generateStrikes = (port: any, count: number, speciesList: string[], prefix: string) => {
   const methods = ["Bottom Trawling", "Longlining", "Handlining", "Potting (Traps)", "Gillnetting"];
+  const today = new Date();
   
   return Array.from({ length: count }).map((_, i) => {
-    // Tighten latitude and push longitude further offshore
     let latOffset = (Math.random() - 0.5) * 3; 
-    let lngOffset = (Math.random() * 6) + 3; // Minimum 3 degrees offshore
+    let lngOffset = (Math.random() * 6) + 3; 
     
-    // Extra safety for Halifax to avoid Nova Scotia / PEI coastlines
     if (prefix === "NS") {
-      latOffset = (Math.random() * -3) - 0.5; // Always South of Halifax
-      lngOffset = (Math.random() * 7) + 2.5;  // East into the Atlantic
+      latOffset = (Math.random() * -3) - 0.5;
+      lngOffset = (Math.random() * 7) + 2.5; 
     }
 
     const strikePos: [number, number] = [port.pos[0] + latOffset, port.pos[1] + lngOffset];
@@ -70,7 +74,11 @@ const generateStrikes = (port: any, count: number, speciesList: string[], prefix
     const distanceKm = getDistance(port.pos, strikePos);
     const species = speciesList[Math.floor(Math.random() * speciesList.length)];
     
-    // Determine category based on species or index
+    // Split into 3 ages: 0 (Today), 1 (Yesterday), 2 (Day before)
+    const age = i % 3;
+    const strikeDate = new Date();
+    strikeDate.setDate(today.getDate() - age);
+    
     const isTrap = species.toLowerCase().includes('lobster') || species.toLowerCase().includes('crab');
     const isMethodology = i % 5 === 0;
 
@@ -78,9 +86,10 @@ const generateStrikes = (port: any, count: number, speciesList: string[], prefix
       id: `${prefix}-${i}`,
       name: isMethodology ? `${methods[i % methods.length]}` : species,
       type: isMethodology ? 'GEAR' : (isTrap ? 'TRAP' : 'FISH'),
+      age: age,
       method: isMethodology ? "Direct Strategy" : methods[Math.floor(Math.random() * methods.length)],
       pos: strikePos,
-      date: `May ${Math.floor(Math.random() * 28) + 1}, 2026`,
+      date: strikeDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
       fuel: `${fuel}L`,
       distance: distanceKm,
       port: port
@@ -178,7 +187,12 @@ export const MaritimeMap = () => {
         
         {/* Map Legend */}
         <div className="map-legend-overlay">
-          <div className="legend-title">COMMAND LEGEND</div>
+          <div className="legend-title">STRIKE AGE</div>
+          <div className="legend-item"><span className="color-dot" style={{ backgroundColor: '#2dd4bf' }}></span> Today</div>
+          <div className="legend-item"><span className="color-dot" style={{ backgroundColor: '#facc15' }}></span> Yesterday</div>
+          <div className="legend-item"><span className="color-dot" style={{ backgroundColor: '#60a5fa' }}></span> 48 Hours Ago</div>
+          
+          <div className="legend-title" style={{ marginTop: '12px' }}>GEAR TYPE</div>
           <div className="legend-item"><span className="symbol circle"></span> Standard Catch</div>
           <div className="legend-item"><span className="symbol diamond"></span> Trap Deployment</div>
           <div className="legend-item"><span className="symbol triangle"></span> Operational Strategy</div>
@@ -190,6 +204,12 @@ export const MaritimeMap = () => {
         .map-wrapper {
           margin-top: 40px;
           position: relative;
+        }
+        .color-dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          border: 1px solid white;
         }
         .map-legend-overlay {
           position: absolute;

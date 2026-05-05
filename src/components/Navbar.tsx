@@ -3,7 +3,7 @@ export const Navbar = () => {
     <header className="navbar glass">
       <div className="nav-content">
         <div className="logo">
-          <span className="logo-icon">⚓</span>
+          <img src="/logo.png" alt="OceanSchema Logo" style={{ height: '100px', width: 'auto' }} />
           <h1 className="logo-text">OceanSchema</h1>
         </div>
         <div className="nav-links">
@@ -21,7 +21,7 @@ export const Navbar = () => {
           width: 90%;
           max-width: 1000px;
           z-index: 1000;
-          padding: 12px 24px;
+          padding: 8px 24px;
         }
         .nav-content {
           display: flex;

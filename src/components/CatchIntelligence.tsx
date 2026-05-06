@@ -20,8 +20,8 @@ export const CatchIntelligence = () => {
   return (
     <section id="intelligence" className="intel-section">
       <div className="section-header">
-        <h2 className="section-title">The <span className="text-gradient">Strategy Command</span></h2>
-        <p className="section-subtitle">Turn your history into a predictive engine. See the profit before you even leave the dock.</p>
+        <h2 className="section-title">The <span className="text-gradient">Data Advantage</span></h2>
+        <p className="section-subtitle">Our hardware creates a unique dataset for OceanSchema, giving you a predictive edge. See the profit before you even leave the dock.</p>
       </div>
 
       <div className="intel-map-container glass">

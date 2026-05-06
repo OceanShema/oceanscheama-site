@@ -2,19 +2,19 @@ export const Hero = () => {
   return (
     <section className="hero">
       <div className="hero-content">
-        <div className="badge glass">Ocean Data & AI Company</div>
+        <div className="badge glass">Automated Maritime Intelligence</div>
         <h1 className="hero-title">
           Intelligence for the <br />
           <span className="text-gradient">Deep Sea</span>.
         </h1>
         <p className="hero-subtitle">
-          We are the global leader in high-fidelity ocean data and predictive AI. 
-          By decoding the unseen variables of the marine frontier, we power the next 
-          generation of maritime operations with surgical precision.
+          Experience the future of fishing with our custom hardware. 
+          Our device automatically recognizes species, logs environmental data, 
+          and handles your catch reports offline, so you can focus on the sea.
         </p>
         <div className="hero-actions">
-          <a href="#about" className="btn-primary">Explore the Intelligence</a>
-          <a href="#vision" className="btn-secondary">Current Applications</a>
+          <a href="#about" className="btn-primary">Explore the Device</a>
+          <a href="#intelligence" className="btn-secondary">View Data Insights</a>
         </div>
       </div>
       
@@ -22,16 +22,16 @@ export const Hero = () => {
         <div className="sonar-ping"></div>
         <div className="dashboard-preview">
           <div className="metric">
-            <span className="label">HEADING (M)</span>
-            <span className="value">284°</span>
+            <span className="label">WATER TEMP</span>
+            <span className="value">18.5°C</span>
           </div>
           <div className="metric">
-            <span className="label">SPEED (KN)</span>
-            <span className="value">12.4</span>
+            <span className="label">SPECIES</span>
+            <span className="value">YELLOWFIN</span>
           </div>
           <div className="metric">
-            <span className="label">COG (GPS)</span>
-            <span className="value">281°</span>
+            <span className="label">SYNC</span>
+            <span className="value">QUEUED</span>
           </div>
         </div>
       </div>

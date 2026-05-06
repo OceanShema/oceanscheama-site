@@ -1,19 +1,19 @@
 export const Features = () => {
   const features = [
     {
-      title: "Uninterrupted Focus",
-      desc: "Stop wrestling with paperwork and signal drops. OceanSchema works silently in the background, letting you focus on the fish while it handles the details with 100% reliability.",
-      icon: "🎣"
+      title: "Automated Recognition",
+      desc: "Our custom hardware identifies species instantly using offline AI. No more manual logs—just focus on your catch while the device handles the identification and data entry.",
+      icon: "🔍"
     },
     {
-      title: "Fuel-to-Strike Mastery",
-      desc: "Stop burning money on empty water. Automatically correlate your fuel consumption with catch volume to identify the exact spots that put the most money in your pocket.",
-      icon: "💰"
+      title: "Environmental Intelligence",
+      desc: "Built-in temperature sensors automatically log the water conditions at every catch location. Understand the environment that yields the best results without lifting a finger.",
+      icon: "🌡️"
     },
     {
-      title: "Regulatory Freedom",
-      desc: "Keep the inspectors happy without lifting a finger. Automated tag tracking and compliance audits mean no more fines, no more delays, and more time on the water.",
-      icon: "⚖️"
+      title: "Offline-First Reliability",
+      desc: "Designed for the deep sea where signals don't reach. The device stores all data locally and syncs automatically to OceanSchema the moment you reach connectivity.",
+      icon: "📡"
     },
     {
       title: "The Wealth Map",
@@ -26,7 +26,7 @@ export const Features = () => {
     <section id="features" className="features">
       <div className="section-header">
         <h2 className="section-title">Superiority by <span className="text-gradient">Design</span></h2>
-        <p className="section-subtitle">OceanSchema isn't a tool; it's your unfair advantage.</p>
+        <p className="section-subtitle">OceanSchema isn't just software; it's your unfair advantage on the water.</p>
       </div>
       
       <div className="features-grid">

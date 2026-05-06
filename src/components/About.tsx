@@ -3,23 +3,23 @@ export const About = () => {
     <section id="about" className="about-section">
       <div className="about-container">
         <div className="about-content">
-          <h2 className="section-title">The <span className="text-gradient">Intelligence</span> Behind the Ocean</h2>
+          <h2 className="section-title">The <span className="text-gradient">Hardware</span> Powering the Ocean</h2>
           <p className="about-text">
-            We are an Ocean Data and AI company. Our mission is to transform the world's most complex and 
-            unpredictable environment into a field of high-fidelity intelligence. 
+            We are an Ocean Data and AI company. Our mission is to automate the capture of maritime intelligence through 
+            rugged, intelligent hardware, making it easier for fishers to navigate and profit from the deep sea.
           </p>
           <div className="about-grid">
             <div className="about-item glass">
-              <h3>Massive Data Capture</h3>
-              <p>Harnessing millions of nautical data points to map the unseen patterns of the deep sea.</p>
+              <h3>Automated Data Capture</h3>
+              <p>Our hardware works silently to identify species and log environment data, eliminating manual paperwork.</p>
             </div>
             <div className="about-item glass">
-              <h3>Predictive AI</h3>
-              <p>Our proprietary neural networks correlate environmental variables to forecast outcomes with surgical precision.</p>
+              <h3>Offline AI Identification</h3>
+              <p>Advanced neural networks built directly into our devices identify catches instantly, even in the middle of the ocean.</p>
             </div>
             <div className="about-item glass">
-              <h3>Real-Time Analysis</h3>
-              <p>Transforming raw oceanic vectors into actionable strategic assets at the edge.</p>
+              <h3>Predictive Advantage</h3>
+              <p>We transform raw environmental variables into a unique dataset that helps you find the most profitable spots.</p>
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import { Hero } from './components/Hero'
 import { About } from './components/About'
 import { IndustryFocus } from './components/IndustryFocus'
 import { Philosophy } from './components/Philosophy'
+import { ManualVsAutomated } from './components/ManualVsAutomated'
 import { Features } from './components/Features'
 import { Navbar } from './components/Navbar'
 import { MaritimeMap } from './components/MaritimeMap'
@@ -18,6 +19,7 @@ function App() {
                         <About />
                         <IndustryFocus />
                         <Philosophy />
+                        <ManualVsAutomated />
                         <Features />
                       <MaritimeMap />
         <CatchIntelligence />

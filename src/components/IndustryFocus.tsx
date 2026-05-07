@@ -2,12 +2,12 @@ export const IndustryFocus = () => {
   return (
     <section className="industry-focus">
       <div className="focus-header">
-        <div className="focus-tag">Current Deployment</div>
+        <div className="focus-tag">Strategic Deployment</div>
         <h2 className="focus-title">Fish <span className="text-gradient">Smarter</span>. Earn <span className="text-gradient">More</span>.</h2>
         <p className="focus-subtitle">
-          Our first major deployment is purpose-built for commercial fishing. 
-          By weaponizing our Ocean AI, we give captains the surgical precision 
-          needed to maximize every strike and dominate the ocean economy.
+          Our operational ledger is purpose-built for elite fishing fleets. 
+          By transforming routinely collected footprints into a competitive advantage, we give captains the surgical precision 
+          needed to optimize every voyage and dominate the maritime economy.
         </p>
       </div>
 

@@ -1,36 +1,36 @@
 import { useState, useEffect } from 'react'
 
-export const CatchIntelligence = () => {
+export const OperationalIntelligence = () => {
   const [activeNode, setActiveNode] = useState(0)
 
-  const catches = [
-    { id: 1, x: 25, y: 30, date: "May 12", value: "$12,400", prob: "94%", loc: "Grand Banks Alpha" },
-    { id: 2, x: 65, y: 45, date: "May 18", value: "$8,900", prob: "88%", loc: "Scotian Shelf Beta" },
-    { id: 3, x: 40, y: 70, date: "May 25", value: "$15,200", prob: "91%", loc: "Emerald Basin" },
-    { id: 4, x: 80, y: 20, date: "June 01", value: "$11,100", prob: "96%", loc: "Laurentian Channel" },
+  const nodes = [
+    { id: 1, x: 25, y: 30, date: "May 12", fuel: "42L/h", dur: "14h", loc: "Northern Drift Cluster" },
+    { id: 2, x: 65, y: 45, date: "May 18", fuel: "38L/h", dur: "8h", loc: "Shelf Break Alpha" },
+    { id: 3, x: 40, y: 70, date: "May 25", fuel: "45L/h", dur: "22h", loc: "Basin High-Yield Zone" },
+    { id: 4, x: 80, y: 20, date: "June 01", fuel: "41L/h", dur: "11h", loc: "Channel Gateway" },
   ]
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveNode((prev) => (prev + 1) % catches.length)
+      setActiveNode((prev) => (prev + 1) % nodes.length)
     }, 4000)
     return () => clearInterval(interval)
-  }, [])
+  }, [nodes.length])
 
   return (
     <section id="intelligence" className="intel-section">
       <div className="section-header">
-        <h2 className="section-title">The <span className="text-gradient">Data Advantage</span></h2>
-        <p className="section-subtitle">Our hardware creates a unique dataset for OceanSchema, giving you a predictive edge. See the profit before you even leave the dock.</p>
+        <h2 className="section-title">The <span className="text-gradient">Operational Advantage</span></h2>
+        <p className="section-subtitle">OceanSchema turns vessel operational footprints into a competitive advantage. See your efficiency before you even dock.</p>
       </div>
 
       <div className="intel-map-container glass">
         {/* Abstract Grid Map */}
         <div className="map-grid">
-          {catches.map((c, i) => (
+          {nodes.map((c, i) => (
             <div 
               key={c.id}
-              className={`catch-node ${i === activeNode ? 'active' : ''}`}
+              className={`op-node ${i === activeNode ? 'active' : ''}`}
               style={{ left: `${c.x}%`, top: `${c.y}%` }}
             >
               <div className="node-core"></div>
@@ -39,16 +39,16 @@ export const CatchIntelligence = () => {
               {/* Data HUD */}
               <div className="node-hud glass">
                 <div className="hud-line">
-                  <span className="label">TARGET ZONE</span>
+                  <span className="label">GPS CLUSTER</span>
                   <span className="value">{c.loc}</span>
                 </div>
                 <div className="hud-line">
-                  <span className="label">EST. MARKET VALUE</span>
-                  <span className="value" style={{ color: '#2dd4bf', fontWeight: 'bold' }}>{c.value}</span>
+                  <span className="label">FUEL BURN RATE</span>
+                  <span className="value" style={{ color: '#2dd4bf', fontWeight: 'bold' }}>{c.fuel}</span>
                 </div>
                 <div className="hud-line">
-                  <span className="label">STRIKE PROBABILITY</span>
-                  <span className="value">{c.prob}</span>
+                  <span className="label">STAY DURATION</span>
+                  <span className="value">{c.dur}</span>
                 </div>
               </div>
             </div>
@@ -61,11 +61,11 @@ export const CatchIntelligence = () => {
         <div className="map-legend">
           <div className="legend-item">
             <span className="dot active"></span>
-            <span>High-Probability Strike</span>
+            <span>High-Yield Cluster</span>
           </div>
           <div className="legend-item">
             <span className="dot"></span>
-            <span>Historical Success Area</span>
+            <span>Fuel Optimized Route</span>
           </div>
         </div>
       </div>
@@ -88,7 +88,7 @@ export const CatchIntelligence = () => {
           background-size: 50px 50px;
           perspective: 1000px;
         }
-        .catch-node {
+        .op-node {
           position: absolute;
           width: 12px;
           height: 12px;
@@ -111,13 +111,13 @@ export const CatchIntelligence = () => {
           opacity: 0;
           transform: scale(0);
         }
-        .catch-node.active .node-core {
+        .op-node.active .node-core {
           background: var(--seafoam);
           box-shadow: 0 0 25px var(--seafoam);
           transform: scale(1.5);
           transition: all 0.5s ease;
         }
-        .catch-node.active .node-ring {
+        .op-node.active .node-ring {
           animation: node-ping 2s infinite;
         }
         @keyframes node-ping {
@@ -137,7 +137,7 @@ export const CatchIntelligence = () => {
           pointer-events: none;
           z-index: 10;
         }
-        .catch-node.active .node-hud {
+        .op-node.active .node-hud {
           opacity: 1;
           transform: translateX(0);
         }

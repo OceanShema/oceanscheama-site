@@ -6,7 +6,7 @@ import { ManualVsAutomated } from './components/ManualVsAutomated'
 import { Features } from './components/Features'
 import { Navbar } from './components/Navbar'
 import { MaritimeMap } from './components/MaritimeMap'
-import { CatchIntelligence } from './components/CatchIntelligence'
+import { OperationalIntelligence } from './components/OperationalIntelligence'
 import { Contact } from './components/Contact'
 import './App.css'
 
@@ -14,15 +14,15 @@ function App() {
   return (
     <div className="app-container">
       <Navbar />
-                      <main>
-                        <Hero />
-                        <About />
-                        <IndustryFocus />
-                        <Philosophy />
-                        <ManualVsAutomated />
-                        <Features />
-                      <MaritimeMap />
-        <CatchIntelligence />
+      <main>
+        <Hero />
+        <About />
+        <IndustryFocus />
+        <Philosophy />
+        <ManualVsAutomated />
+        <Features />
+        <MaritimeMap />
+        <OperationalIntelligence />
         <Contact />
       </main>
       <footer className="footer">

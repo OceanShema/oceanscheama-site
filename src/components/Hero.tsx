@@ -2,19 +2,18 @@ export const Hero = () => {
   return (
     <section className="hero">
       <div className="hero-content">
-        <div className="badge glass">Automated Maritime Intelligence</div>
+        <div className="badge glass">Maritime Operational Ledger</div>
         <h1 className="hero-title">
-          Intelligence for the <br />
-          <span className="text-gradient">Deep Sea</span>.
+          Transform Every Voyage into <br />
+          <span className="text-gradient">Actionable Intelligence</span>.
         </h1>
         <p className="hero-subtitle">
-          Experience the future of fishing with our custom hardware. 
-          Our device automatically recognizes species, logs environmental data, 
-          and handles your catch reports offline, so you can focus on the sea.
+          Capture vessel GPS routes and fuel usage — no manual logging, no guesswork — 
+          to identify productive fishing spots, optimize routes, and reduce costs.
         </p>
         <div className="hero-actions">
-          <a href="#about" className="btn-primary">Explore the Device</a>
-          <a href="#intelligence" className="btn-secondary">View Data Insights</a>
+          <a href="#about" className="btn-primary">Request a Demo</a>
+          <a href="#intelligence" className="btn-secondary">Explore Insights</a>
         </div>
       </div>
       
@@ -22,16 +21,16 @@ export const Hero = () => {
         <div className="sonar-ping"></div>
         <div className="dashboard-preview">
           <div className="metric">
-            <span className="label">WATER TEMP</span>
-            <span className="value">18.5°C</span>
+            <span className="label">FUEL FLOW</span>
+            <span className="value">42.8 L/H</span>
           </div>
           <div className="metric">
-            <span className="label">SPECIES</span>
-            <span className="value">YELLOWFIN</span>
+            <span className="label">GPS CLUSTER</span>
+            <span className="value">DETECTED</span>
           </div>
           <div className="metric">
-            <span className="label">SYNC</span>
-            <span className="value">QUEUED</span>
+            <span className="label">LEDGER</span>
+            <span className="value">SYNCED</span>
           </div>
         </div>
       </div>

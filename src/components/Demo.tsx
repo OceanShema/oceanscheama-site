@@ -36,18 +36,18 @@ export const Demo = () => {
         <div className="demo-content">
           <div className="step">
             <div className="step-num">01</div>
-            <h4>Eyes on the Water</h4>
-            <p>Log your strikes with a single tap. No more notebooks, no more delays. Stay focused on the fishing while the app quietly builds your profit map in the background.</p>
+            <h4>Passive Data Capture</h4>
+            <p>Your vessel's operational footprints are captured automatically. No more notebooks, no more manual logs. Stay focused on the sea while OceanSchema builds your operational ledger in the background.</p>
           </div>
           <div className="step">
             <div className="step-num">02</div>
-            <h4>Fleet Coordination</h4>
-            <p>Back at the dock, your data is already waiting. Coordinate with your fleet or review your day instantly without lifting a finger. Your office work is done before you hit the harbor.</p>
+            <h4>Vessel Optimization</h4>
+            <p>Back at the dock, your efficiency metrics are already waiting. Review fuel burn rates and route performance instantly without lifting a finger. Your admin work is done before you hit the harbor.</p>
           </div>
           <div className="step">
             <div className="step-num">03</div>
-            <h4>Compound Your Earnings</h4>
-            <p>The more you fish, the smarter you get. Review past seasons to see exactly which conditions led to your biggest paydays. Turn every voyage into a masterclass in profitability.</p>
+            <h4>Strategic Planning</h4>
+            <p>The more you voyage, the smarter you get. Review past seasons to see exactly which routes and clusters led to your most efficient trips. Turn routinely collected data into a masterclass in profitability.</p>
           </div>
         </div>
       </div>

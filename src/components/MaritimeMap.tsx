@@ -1,280 +1,160 @@
 import { useState, useMemo } from 'react'
-import { MapContainer, TileLayer, Marker, Polyline, Tooltip } from 'react-leaflet'
-import L from 'leaflet'
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
+import L from 'leaflet'
 
-// Custom marker icon for Profit Points (Color-Coded by Age - Shades of Blue)
-const getStrikeIcon = (type: string, age: number) => {
-  const colors = ["#003366", "#3b82f6", "#93c5fd"]; // Dark Navy (Today), Ocean Blue (Yesterday), Sky Blue (2 Days Ago)
-  const color = colors[age] || colors[2];
-  
-  return new L.DivIcon({
+// Custom icons for maritime clusters
+const getClusterIcon = (age: number) => {
+  const color = age < 3 ? '#2dd4bf' : age < 7 ? '#fbbf24' : '#64748b';
+  return L.divIcon({
     className: 'custom-div-icon',
-    html: `
-      <div style="
-        width: 12px; 
-        height: 12px; 
-        background-color: ${color}; 
-        border: 1px solid white; 
-        box-shadow: 0 0 8px ${color}88;
-        ${type === 'FISH' ? 'border-radius: 50%;' : type === 'TRAP' ? 'transform: rotate(45deg);' : 'clip-path: polygon(50% 0%, 0% 100%, 100% 100%);'}
-      "></div>
-    `,
+    html: `<div style="background-color: ${color}; width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 10px ${color}; border: 2px solid rgba(255,255,255,0.5);"></div>`,
     iconSize: [12, 12],
     iconAnchor: [6, 6]
   });
-}
+};
 
-// Custom icon for the Command Center (Professional Lighthouse/Tower)
-const homeIcon = new L.DivIcon({
-  className: 'custom-div-icon',
-  html: `
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 0 8px rgba(13, 148, 136, 0.5));">
-      <path d="M12 2L15 8H9L12 2Z" fill="#0d9488"/>
-      <rect x="10" y="8" width="4" height="12" fill="#0f172a"/>
-      <rect x="9" y="18" width="6" height="2" fill="#0f172a"/>
-      <circle cx="12" cy="5" r="1.5" fill="#2dd4bf">
-        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" />
-      </circle>
-    </svg>
-  `,
-  iconSize: [30, 30],
-  iconAnchor: [15, 15]
-})
+const PORTS = {
+  ST_JOHNS: { name: "St. John's", pos: [47.5615, -52.7126] as [number, number] },
+  HALIFAX: { name: "Halifax", pos: [44.6488, -63.5752] as [number, number] }
+};
 
-// Helper to calculate distance in KM
 const getDistance = (p1: [number, number], p2: [number, number]) => {
-  const R = 6371; // Earth's radius in km
-  const dLat = (p2[0] - p1[0]) * Math.PI / 180;
-  const dLon = (p2[1] - p1[1]) * Math.PI / 180;
-  const a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(p1[0] * Math.PI / 180) * Math.cos(p2[0] * Math.PI / 180) * 
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  return Math.round(R * c);
-}
+  return Math.sqrt(Math.pow(p1[0] - p2[0], 2) + Math.pow(p1[1] - p2[1], 2)) * 111;
+};
 
-// Helper to generate realistic strikes (Specifically tuned to stay in deep water)
-const generateStrikes = (port: any, count: number, speciesList: string[], prefix: string) => {
-  const methods = ["Bottom Trawling", "Longlining", "Handlining", "Potting (Traps)", "Gillnetting"];
+// Helper to generate realistic operational clusters
+const generateClusters = (port: any, count: number, typeList: string[], prefix: string) => {
+  const clusters = [];
   const today = new Date();
   
-  return Array.from({ length: count }).map((_, i) => {
-    let latOffset = (Math.random() - 0.5) * 3; 
-    let lngOffset = (Math.random() * 6) + 3; 
+  for (let i = 0; i < count; i++) {
+    // Generate clusters along the continental shelf
+    const latOffset = (Math.random() - 0.5) * 8;
+    const lngOffset = (Math.random() * 8) + 2; // Move away from coast
     
-    if (prefix === "NS") {
-      latOffset = (Math.random() * -3) - 0.5;
-      lngOffset = (Math.random() * 7) + 2.5; 
-    }
+    const clusterPos: [number, number] = [port.pos[0] + latOffset, port.pos[1] + lngOffset];
+    
+    // Simple filter to keep them in the ocean (East of ports)
+    if (clusterPos[1] < -65) continue; 
 
-    const strikePos: [number, number] = [port.pos[0] + latOffset, port.pos[1] + lngOffset];
-    const fuel = Math.floor(200 + Math.random() * 600);
-    const distanceKm = getDistance(port.pos, strikePos);
-    const species = speciesList[Math.floor(Math.random() * speciesList.length)];
+    const distanceKm = getDistance(port.pos, clusterPos);
+    const type = typeList[Math.floor(Math.random() * typeList.length)];
+    const age = Math.floor(Math.random() * 14);
     
-    // Split into 3 ages: 0 (Today), 1 (Yesterday), 2 (Day before)
-    const age = i % 3;
-    const strikeDate = new Date();
-    strikeDate.setDate(today.getDate() - age);
-    
-    const isTrap = species.toLowerCase().includes('lobster') || species.toLowerCase().includes('crab');
-    const isMethodology = i % 5 === 0;
+    const clusterDate = new Date();
+    clusterDate.setDate(today.getDate() - age);
 
-    return {
+    clusters.push({
       id: `${prefix}-${i}`,
-      name: isMethodology ? `${methods[i % methods.length]}` : species,
-      type: isMethodology ? 'GEAR' : (isTrap ? 'TRAP' : 'FISH'),
+      name: type,
+      pos: clusterPos,
+      date: clusterDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      distance: Math.round(distanceKm),
       age: age,
-      method: isMethodology ? "Direct Strategy" : methods[Math.floor(Math.random() * methods.length)],
-      pos: strikePos,
-      date: strikeDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-      fuel: `${fuel}L`,
-      distance: distanceKm,
+      fuelEfficiency: (85 + Math.random() * 15).toFixed(1) + "%",
       port: port
-    };
-  });
-}
+    });
+  }
+  return clusters;
+};
 
-const nlSpecies = ["Bluefin Tuna (XL)", "Atlantic Cod School", "Snow Crab Cluster", "Greenland Halibut", "Redfish Strike"];
-const nsSpecies = ["Jumbo Lobster Bed", "Haddock Goldmine", "Scallop Bed (Prime)", "Swordfish Strike", "Pollock Run"];
+const opTypes = ["High-Yield Stay", "Efficiency Corridor", "Thermal Front Cluster", "Deep-Sea Operations Zone", "Bank Edge Operations"];
 
 export const MaritimeMap = () => {
-  const [hoveredStrike, setHoveredStrike] = useState<any>(null)
-  
-  const PORTS = {
-    ST_JOHNS: { name: "ST. JOHN'S COMMAND", pos: [47.5675, -52.7076] as [number, number] },
-    HALIFAX: { name: "HALIFAX COMMAND", pos: [44.6488, -63.5752] as [number, number] }
-  }
+  const [hoveredCluster, setHoveredCluster] = useState<any>(null)
 
-  // Use useMemo to ensure strikes are generated once and don't change on hover
-  const strikes = useMemo(() => [
-    ...generateStrikes(PORTS.ST_JOHNS, 25, nlSpecies, "NL"),
-    ...generateStrikes(PORTS.HALIFAX, 25, nsSpecies, "NS")
+  const clusters = useMemo(() => [
+    ...generateClusters(PORTS.ST_JOHNS, 25, opTypes, "NL"),
+    ...generateClusters(PORTS.HALIFAX, 25, opTypes, "NS")
   ], []);
 
-  const center: [number, number] = [45.0, -58.0]
-
   return (
-    <section id="map" className="map-section">
+    <section id="maritime-map" className="maritime-map-section">
       <div className="section-header">
-        <h2 className="section-title">The <span className="text-gradient">Profit Map</span></h2>
-        <p className="section-subtitle" style={{ color: '#475569' }}>Visualize the straightest line between your home port and your biggest paydays.</p>
+        <h2 className="section-title">Global <span className="text-gradient">Operational Matrix</span></h2>
+        <p className="section-subtitle">Real-time visualization of vessel operational footprints and efficiency corridors.</p>
       </div>
 
-      <div className="map-wrapper" style={{ border: '4px solid white', borderRadius: '24px', boxShadow: '0 20px 50px rgba(0,0,0,0.1)' }}>
+      <div className="map-wrapper glass">
         <MapContainer 
-          center={center} 
+          center={[45, -55]} 
           zoom={5} 
-          scrollWheelZoom={false} 
           style={{ height: '700px', width: '100%', borderRadius: '20px' }}
+          scrollWheelZoom={false}
         >
-          {/* Light Mode Tiles */}
           <TileLayer
+            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
           />
-
-          {/* Command Centers */}
-          {Object.values(PORTS).map((p, i) => (
-            <Marker key={i} position={p.pos} icon={homeIcon}>
-              <Tooltip permanent direction="top" offset={[0, -10]}>
-                <span style={{ fontWeight: 800, color: '#0f172a' }}>{p.name}</span>
-              </Tooltip>
-            </Marker>
-          ))}
-
-          {/* Connection Line on Hover to the correct port - interactive: false prevents flickering */}
-          {hoveredStrike && (
+          
+          {hoveredCluster && (
             <Polyline 
-              positions={[hoveredStrike.port.pos, hoveredStrike.pos]} 
-              pathOptions={{ color: '#0d9488', weight: 3, dashArray: '10, 10', opacity: 0.6, interactive: false }} 
+              positions={[hoveredCluster.port.pos, hoveredCluster.pos]} 
+              pathOptions={{ color: '#2dd4bf', weight: 1, dashArray: '5, 10', opacity: 0.5 }} 
             />
           )}
 
-          {strikes.map((s) => (
+          {clusters.map((s) => (
             <Marker 
               key={s.id} 
               position={s.pos} 
-              icon={getStrikeIcon(s.type, s.age)}
+              icon={getClusterIcon(s.age)}
               eventHandlers={{
-                mouseover: (e) => {
-                  setHoveredStrike(s);
-                  e.target.openTooltip();
-                },
-                mouseout: (e) => {
-                  setHoveredStrike(null);
-                  e.target.closeTooltip();
-                },
+                mouseover: () => setHoveredCluster(s),
+                mouseout: () => setHoveredCluster(null),
               }}
             >
-              <Tooltip direction="top" offset={[0, -10]} opacity={1}>
+              <Popup>
                 <div className="map-popup">
-                  <div className="popup-header">PROFIT SUMMARY</div>
-                  <div className="popup-row"><span>{s.type === 'GEAR' ? 'METHOD:' : 'CATCH:'}</span> <strong>{s.name}</strong></div>
-                  <div className="popup-row"><span>GEAR:</span> {s.method}</div>
-                  <div className="popup-row"><span>DISTANCE:</span> <strong>{s.distance} KM / {Math.round(s.distance * 0.54)} NM</strong></div>
-                  <div className="popup-row"><span>VOYAGE BURN:</span> <strong style={{ color: '#0d9488' }}>{s.fuel} (To & Fro)</strong></div>
-                  <div className="popup-row" style={{ marginTop: '8px', fontSize: '0.7rem', fontStyle: 'italic', color: '#64748b' }}>
-                    Surgical strike confirmed.
+                  <h3>{s.id}</h3>
+                  <div className="popup-row"><span>ZONE:</span> <strong>{s.name}</strong></div>
+                  <div className="popup-row"><span>LOGGED:</span> <span>{s.date}</span></div>
+                  <div className="popup-row"><span>FUEL EFFICIENCY:</span> <span style={{color: '#2dd4bf'}}>{s.fuelEfficiency}</span></div>
+                  <div className="popup-row"><span>FROM:</span> <span>{s.port.name} ({s.distance}km)</span></div>
+                  <div className="popup-footer">
+                    Vessel footprint verified.
                   </div>
                 </div>
-              </Tooltip>
+              </Popup>
             </Marker>
           ))}
         </MapContainer>
-        
-        {/* Map Legend */}
-        <div className="map-legend-overlay">
-          <div className="legend-title">STRIKE AGE</div>
-          <div className="legend-item"><span className="color-dot" style={{ backgroundColor: '#003366' }}></span> Today</div>
-          <div className="legend-item"><span className="color-dot" style={{ backgroundColor: '#3b82f6' }}></span> Yesterday</div>
-          <div className="legend-item"><span className="color-dot" style={{ backgroundColor: '#93c5fd' }}></span> 48 Hours Ago</div>
-          
-          <div className="legend-title" style={{ marginTop: '12px' }}>GEAR TYPE</div>
-          <div className="legend-item"><span className="symbol circle"></span> Standard Catch</div>
-          <div className="legend-item"><span className="symbol diamond"></span> Trap Deployment</div>
-          <div className="legend-item"><span className="symbol triangle"></span> Operational Strategy</div>
+
+        <div className="map-legend-overlay glass">
+          <div className="legend-title">FOOTPRINT AGE</div>
+          <div className="legend-item"><span className="dot hot"></span> Active (0-3 Days)</div>
+          <div className="legend-item"><span className="dot warm"></span> Recent (4-7 Days)</div>
+          <div className="legend-item"><span className="dot cold"></span> Historical (8+ Days)</div>
         </div>
       </div>
 
       <style>{`
-        .map-section { padding-top: 100px; padding-bottom: 100px; }
-        .map-wrapper {
-          margin-top: 40px;
-          position: relative;
-        }
-        .color-dot {
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          border: 1px solid white;
-        }
+        .maritime-map-section { padding: 100px 20px; }
+        .map-wrapper { position: relative; border-radius: 24px; padding: 10px; }
+        .map-popup h3 { color: var(--seafoam); font-size: 0.9rem; margin-bottom: 10px; letter-spacing: 1px; }
+        .popup-row { display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 6px; }
+        .popup-row span { opacity: 0.6; }
+        .popup-footer { margin-top: 12px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.65rem; font-weight: 800; color: var(--seafoam); text-transform: uppercase; }
+        
         .map-legend-overlay {
           position: absolute;
-          bottom: 30px;
-          right: 30px;
-          background: rgba(255, 255, 255, 0.9);
-          padding: 15px;
-          border-radius: 12px;
+          bottom: 40px;
+          left: 40px;
           z-index: 1000;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-          border: 1px solid #e2e8f0;
-          font-family: 'Inter', sans-serif;
+          padding: 20px;
+          width: 200px;
         }
-        .legend-title {
-          font-size: 0.7rem;
-          font-weight: 800;
-          color: #64748b;
-          margin-bottom: 10px;
-          letter-spacing: 1px;
-        }
-        .legend-item {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          font-size: 0.8rem;
-          font-weight: 600;
-          color: #0f172a;
-          margin-bottom: 6px;
-        }
-        .symbol {
-          width: 10px;
-          height: 10px;
-          background: #0d9488;
-          border: 1px solid white;
-        }
-        .symbol.circle { border-radius: 50%; }
-        .symbol.diamond { transform: rotate(45deg); }
-        .symbol.triangle { clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
-        
-        .map-popup {
-          color: #0f172a;
-          font-family: 'Inter', sans-serif;
-          min-width: 180px;
-        }
-        .popup-header {
-          font-weight: 800;
-          font-size: 0.75rem;
-          color: #0d9488;
-          border-bottom: 1px solid #e2e8f0;
-          padding-bottom: 8px;
-          margin-bottom: 10px;
-          letter-spacing: 1px;
-        }
-        .popup-row {
-          font-size: 0.9rem;
-          margin-bottom: 6px;
-        }
-        .popup-row span {
-          font-weight: 600;
-          opacity: 0.6;
-          margin-right: 8px;
-        }
-        .leaflet-container {
-          background: #f8fafc !important;
-        }
+        .legend-title { font-size: 0.7rem; font-weight: 800; margin-bottom: 12px; opacity: 0.5; letter-spacing: 1px; }
+        .legend-item { display: flex; align-items: center; gap: 10px; font-size: 0.75rem; margin-bottom: 8px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .dot.hot { background: #2dd4bf; box-shadow: 0 0 10px #2dd4bf; }
+        .dot.warm { background: #fbbf24; box-shadow: 0 0 10px #fbbf24; }
+        .dot.cold { background: #64748b; }
+
+        .leaflet-container { background: #000b1a !important; }
+        .leaflet-popup-content-wrapper { background: rgba(0, 11, 26, 0.9) !important; color: #fff !important; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px !important; }
+        .leaflet-popup-tip { background: rgba(0, 11, 26, 0.9) !important; }
       `}</style>
     </section>
   )

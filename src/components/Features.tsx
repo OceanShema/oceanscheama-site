@@ -1,32 +1,32 @@
 export const Features = () => {
   const features = [
     {
-      title: "Automated Recognition",
-      desc: "Our custom hardware identifies species instantly using offline AI. No more manual logs—just focus on your catch while the device handles the identification and data entry.",
-      icon: "🔍"
+      title: "Passive Data Capture",
+      desc: "Automatic GPS and fuel logs captured at regular intervals. No manual input required, ensuring your focus remains entirely on vessel operation and safety.",
+      icon: "🛰️"
     },
     {
-      title: "Environmental Intelligence",
-      desc: "Built-in temperature sensors automatically log the water conditions at every catch location. Understand the environment that yields the best results without lifting a finger.",
-      icon: "🌡️"
+      title: "Efficiency Analytics",
+      desc: "Detect clusters of activity and efficiency trends automatically. See where your vessel spends the most time and how it correlates with fuel burn rates.",
+      icon: "📊"
     },
     {
-      title: "Offline-First Reliability",
-      desc: "Designed for the deep sea where signals don't reach. The device stores all data locally and syncs automatically to OceanSchema the moment you reach connectivity.",
-      icon: "📡"
+      title: "Actionable Guidance",
+      desc: "Receive data-driven recommendations for future route planning and spot selection based on the historical performance of your vessel's operational footprints.",
+      icon: "🧭"
     },
     {
-      title: "The Wealth Map",
-      desc: "Turn every voyage into an investment. Build a private, permanent record of your most profitable strikes so you can return to the money year after year with surgical precision.",
-      icon: "🗺️"
+      title: "Competitive Edge",
+      desc: "Turn routinely collected navigation metrics into a proprietary advantage. Build a private record of the most efficient routes to maximize your ROI every season.",
+      icon: "💎"
     }
   ]
 
   return (
     <section id="features" className="features">
       <div className="section-header">
-        <h2 className="section-title">Superiority by <span className="text-gradient">Design</span></h2>
-        <p className="section-subtitle">OceanSchema isn't just software; it's your unfair advantage on the water.</p>
+        <h2 className="section-title">Superiority by <span className="text-gradient">Data</span></h2>
+        <p className="section-subtitle">OceanSchema isn't just a logbook; it's your unfair advantage on the water.</p>
       </div>
       
       <div className="features-grid">

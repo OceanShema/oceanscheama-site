@@ -4,8 +4,8 @@ export const StrategicMap = () => {
   const [hoveredVoyage, setHoveredVoyage] = useState<string | null>(null)
 
   const voyages = [
-    { id: "VOYAGE-712", path: "M 50 300 Q 150 250 250 280 T 450 200", catches: [{x: 150, y: 250}, {x: 350, y: 240}] },
-    { id: "VOYAGE-804", path: "M 100 450 Q 250 400 300 300 T 500 150", catches: [{x: 250, y: 400}, {x: 400, y: 220}] }
+    { id: "VOYAGE-712", path: "M 50 300 Q 150 250 250 280 T 450 200", clusters: [{x: 150, y: 250}, {x: 350, y: 240}] },
+    { id: "VOYAGE-804", path: "M 100 450 Q 250 400 300 300 T 500 150", clusters: [{x: 250, y: 400}, {x: 400, y: 220}] }
   ]
 
   return (
@@ -42,9 +42,9 @@ export const StrategicMap = () => {
                 <path d={v.path} className="voyage-path" />
                 <path d={v.path} className="voyage-path-glow" />
                 
-                {/* Catch Nodes */}
-                {v.catches.map((c, i) => (
-                  <circle key={i} cx={c.x} cy={c.y} r="4" className="strike-node" />
+                {/* Efficiency Clusters */}
+                {v.clusters.map((c, i) => (
+                  <circle key={i} cx={c.x} cy={c.y} r="4" className="op-node" />
                 ))}
               </g>
             ))}
@@ -118,12 +118,12 @@ export const StrategicMap = () => {
           to { stroke-dashoffset: 0; }
         }
 
-        .strike-node {
+        .op-node {
           fill: var(--seafoam);
           box-shadow: 0 0 10px var(--seafoam);
           transition: r 0.3s;
         }
-        .voyage-group.active .strike-node {
+        .voyage-group.active .op-node {
           r: 6;
         }
 

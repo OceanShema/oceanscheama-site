@@ -4,11 +4,11 @@ export const Philosophy = () => {
       <div className="philosophy-content">
         <div className="quote-icon">"</div>
         <h2 className="philosophy-text">
-          In the world of commercial fishing, a <span className="text-gradient">Surgical Strike</span> is a mission that is fast, precise, and achieves its goal with zero wasted effort.
+          In the world of commercial fishing, a <span className="text-gradient">Surgical Strike</span> is a mission that turns navigation metrics into a proprietary advantage.
         </h2>
         <p className="philosophy-subtext">
-          OceanSchema is built for the captains who treat every voyage as a high-precision operation. 
-          No wandering. No guessing. Just the straightest line to the highest profit.
+          OceanSchema is built for the captains who treat every voyage as a data-driven operation. 
+          No wandering. No guessing. Just turn routinely collected footprints into insights that help you make better planning decisions trip after trip.
         </p>
       </div>
 

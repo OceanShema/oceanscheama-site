@@ -3,23 +3,23 @@ export const About = () => {
     <section id="about" className="about-section">
       <div className="about-container">
         <div className="about-content">
-          <h2 className="section-title">The <span className="text-gradient">Hardware</span> Powering the Ocean</h2>
+          <h2 className="section-title">The World’s First <span className="text-gradient">Operational Ledger</span></h2>
           <p className="about-text">
-            We are an Ocean Data and AI company. Our mission is to automate the capture of maritime intelligence through 
-            rugged, intelligent hardware, making it easier for fishers to navigate and profit from the deep sea.
+            Instead of relying on manual catch reports, OceanSchema passively collects vessel GPS coordinates and fuel usage data throughout each trip. 
+            We turn routinely collected navigation metrics into insights that drive smarter, more efficient fishing operations.
           </p>
           <div className="about-grid">
             <div className="about-item glass">
-              <h3>Automated Data Capture</h3>
-              <p>Our hardware works silently to identify species and log environment data, eliminating manual paperwork.</p>
+              <h3>Yield Optimization</h3>
+              <p>Identify high-yield fishing locations based on vessel stop patterns and stay durations detected by our high-fidelity GPS logging.</p>
             </div>
             <div className="about-item glass">
-              <h3>Offline AI Identification</h3>
-              <p>Advanced neural networks built directly into our devices identify catches instantly, even in the middle of the ocean.</p>
+              <h3>Fuel Efficiency</h3>
+              <p>Measure fuel consumption across different routes and areas to optimize future voyages and significantly reduce operational costs.</p>
             </div>
             <div className="about-item glass">
-              <h3>Predictive Advantage</h3>
-              <p>We transform raw environmental variables into a unique dataset that helps you find the most profitable spots.</p>
+              <h3>Historical Advantage</h3>
+              <p>Build a reliable, data-driven view of where your fleet performs best by ranking spots based on multi-year historical performance.</p>
             </div>
           </div>
         </div>

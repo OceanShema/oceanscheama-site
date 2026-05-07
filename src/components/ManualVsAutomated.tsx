@@ -3,7 +3,7 @@ export const ManualVsAutomated = () => {
     <section className="mv-section">
       <div className="section-header">
         <h2 className="section-title">The End of the <span className="text-gradient">Logbook Era</span></h2>
-        <p className="section-subtitle">Commercial fishing is hard enough. Your data entry shouldn't be.</p>
+        <p className="section-subtitle">Commercial fishing is hard enough. Your operational data entry shouldn't be.</p>
       </div>
 
       <div className="comparison-container">
@@ -13,36 +13,29 @@ export const ManualVsAutomated = () => {
             <li>
               <span className="icon">📝</span>
               <div className="text">
-                <strong>Wet Paper & Pens</strong>
-                <p>Wrestling with soggy logs and ink that runs in the salt spray.</p>
+                <strong>Manual Navigation Logs</strong>
+                <p>Manually recording GPS coordinates at regular intervals while managing gear.</p>
               </div>
             </li>
             <li>
-              <span className="icon">🖐️</span>
+              <span className="icon">⛽</span>
               <div className="text">
-                <strong>Manual Tallying</strong>
-                <p>Taking your hands off the gear to count and record every single catch.</p>
+                <strong>Estimated Fuel Usage</strong>
+                <p>Guessing fuel consumption per route without precise flow metrics.</p>
               </div>
             </li>
             <li>
               <span className="icon">❓</span>
               <div className="text">
-                <strong>Environmental Guesswork</strong>
-                <p>Estimating water temp and depth without precise, time-synced sensors.</p>
+                <strong>Inconsistent Data</strong>
+                <p>Gaps in route history make it impossible to identify true efficiency patterns.</p>
               </div>
             </li>
             <li>
               <span className="icon">💻</span>
               <div className="text">
-                <strong>Digital Double Entry</strong>
-                <p>Spending hours at the dock transcribing soggy notes into a computer or phone.</p>
-              </div>
-            </li>
-            <li>
-              <span className="icon">⚖️</span>
-              <div className="text">
-                <strong>Regulatory Stress</strong>
-                <p>Hoping your manual logs are accurate enough to pass the next audit.</p>
+                <strong>Post-Voyage Admin</strong>
+                <p>Spending hours at the dock transcribing navigation notes for fleet reports.</p>
               </div>
             </li>
           </ul>
@@ -57,34 +50,34 @@ export const ManualVsAutomated = () => {
         </div>
 
         <div className="side automated-side glass">
-          <div className="side-label highlights">The Hardware Edge</div>
+          <div className="side-label highlights">The Passive Edge</div>
           <ul className="comparison-list">
             <li>
-              <span className="icon">👁️</span>
+              <span className="icon">🛰️</span>
               <div className="text">
-                <strong>Visual Recognition</strong>
-                <p>Custom AI hardware identifies species instantly as they cross the deck.</p>
+                <strong>Continuous GPS Tracking</strong>
+                <p>High-fidelity route capture without ever touching a screen or pen.</p>
               </div>
             </li>
             <li>
-              <span className="icon">🤲</span>
+              <span className="icon">🔥</span>
               <div className="text">
-                <strong>Hands-Free Logging</strong>
-                <p>The device logs everything automatically. You never touch a pen.</p>
+                <strong>Real-time Fuel Metrics</strong>
+                <p>Automatic logging of fuel burn rates synced precisely with vessel location.</p>
               </div>
             </li>
             <li>
-              <span className="icon">📡</span>
+              <span className="icon">📈</span>
               <div className="text">
-                <strong>Embedded Sensors</strong>
-                <p>Precision thermistors and GPS log the exact conditions of every catch.</p>
+                <strong>Pattern Recognition</strong>
+                <p>Instantly uncover high-yield clusters and fuel-efficient corridors.</p>
               </div>
             </li>
             <li>
               <span className="icon">✅</span>
               <div className="text">
-                <strong>Verified Compliance</strong>
-                <p>Generate 100% accurate reports with a single tap once you're back in range.</p>
+                <strong>Zero-Effort Ledger</strong>
+                <p>Generate 100% accurate operational reports with a single tap back at dock.</p>
               </div>
             </li>
           </ul>

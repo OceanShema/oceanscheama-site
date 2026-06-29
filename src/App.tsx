@@ -9,6 +9,7 @@ import WhyNow from './components/WhyNow';
 import Market from './components/Market';
 import WhyUs from './components/WhyUs';
 import Laboratory from './components/Laboratory';
+import { Contact } from './components/Contact';
 import CallToAction from './components/CallToAction';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <WhyUs />
         <Laboratory />
         <CallToAction />
+        <Contact />
       </main>
     </div>
   );

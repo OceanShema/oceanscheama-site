@@ -8,12 +8,40 @@
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1100px; /* Increased max-width for two-column layout */
   margin: 0 auto;
   background-color: rgba(10, 25, 47, 0.8); /* Keep semi-transparent dark background for readability */
   padding: 40px;
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.partner-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Align items to the top */
+  gap: 40px; /* Space between description and form */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.partner-description,
+.partner-form-wrapper {
+  flex: 1; /* Distribute space equally */
+  min-width: 300px; /* Minimum width before wrapping */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .partner-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+  .partner-description,
+  .partner-form-wrapper {
+    min-width: unset;
+    width: 100%;
+  }
 }
 
 .section-title {
@@ -75,4 +103,56 @@
 .cta-button:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(45, 212, 191, 0.3);
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.contact-subtitle {
+  opacity: 0.6;
+  margin-top: 10px;
+}
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.form-group label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--seafoam);
+}
+.glass-input {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 14px;
+  color: #fff;
+  font-family: inherit;
+  transition: border-color 0.3s;
+}
+.glass-input:focus {
+  outline: none;
+  border-color: var(--seafoam);
+}
+.submit-btn {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.form-status {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--seafoam);
+  letter-spacing: 1px;
+  margin-top: 20px;
 }

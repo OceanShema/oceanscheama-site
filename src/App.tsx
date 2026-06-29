@@ -9,8 +9,7 @@ import WhyNow from './components/WhyNow';
 import Market from './components/Market';
 import WhyUs from './components/WhyUs';
 import Laboratory from './components/Laboratory';
-import { Contact } from './components/Contact';
-import CallToAction from './components/CallToAction';
+import PartnerWithUs from './components/PartnerWithUs';
 
 function App() {
   return (
@@ -26,8 +25,7 @@ function App() {
         <Market />
         <WhyUs />
         <Laboratory />
-        <CallToAction />
-        <Contact />
+        <PartnerWithUs />
       </main>
     </div>
   );

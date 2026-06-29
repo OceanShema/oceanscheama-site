@@ -6,7 +6,7 @@ const Navbar: React.FC = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <a href="#hero" className="navbar-logo">
-          <img src="/placeholder-logo.svg" alt="OceanSchema Logo" />
+          <img src="/oceanschemalogo.png" alt="OceanSchema Logo" />
           <span>OceanSchema</span>
         </a>
         <ul className="nav-menu">

@@ -1,0 +1,78 @@
+.section {
+  padding: 80px 20px;
+  text-align: center;
+  border-top: 1px solid var(--glass-border);
+  background-color: transparent; /* Remove solid background, let particle animation show */
+  background-image: none; /* Remove grid background */
+  color: #f0f0f0; /* Light, off-white for body text, visible over dark particles */
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: rgba(10, 25, 47, 0.8); /* Keep semi-transparent dark background for readability */
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.section-title {
+  font-size: 3rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+  color: #ffffff; /* Bright white for main titles, visible over dark particles */
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.section-paragraph {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.section-paragraph.strong {
+  font-weight: 600;
+  color: var(--water); /* Use the water accent color */
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 30px 0;
+  text-align: left;
+  display: inline-block;
+}
+
+.feature-list li {
+  font-size: 1.15rem;
+  margin-bottom: 15px;
+  position: relative;
+  padding-left: 30px;
+}
+
+.feature-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--seafoam); /* Use the seafoam accent color */
+  font-weight: bold;
+}
+
+.cta-button {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 18px 35px;
+  background: linear-gradient(135deg, var(--seafoam), var(--water));
+  color: var(--ocean-dark);
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(45, 212, 191, 0.3);
+}

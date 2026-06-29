@@ -1,41 +1,34 @@
-import { Hero } from './components/Hero'
-import { About } from './components/About'
-import { IndustryFocus } from './components/IndustryFocus'
-import { Philosophy } from './components/Philosophy'
-import { ManualVsAutomated } from './components/ManualVsAutomated'
-import { Features } from './components/Features'
-import { Navbar } from './components/Navbar'
-import { MaritimeMap } from './components/MaritimeMap'
-import { OperationalIntelligence } from './components/OperationalIntelligence'
-import { Contact } from './components/Contact'
-import './App.css'
+import ParticleCanvas from './components/ParticleCanvas';
+import './App.css';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Problem from './components/Problem';
+import Vision from './components/Vision';
+import Product from './components/Product';
+import WhyNow from './components/WhyNow';
+import Market from './components/Market';
+import WhyUs from './components/WhyUs';
+import Laboratory from './components/Laboratory';
+import CallToAction from './components/CallToAction';
 
 function App() {
   return (
     <div className="app-container">
+      <ParticleCanvas />
       <Navbar />
+      <Hero />
       <main>
-        <Hero />
-        <About />
-        <IndustryFocus />
-        <Philosophy />
-        <ManualVsAutomated />
-        <Features />
-        <MaritimeMap />
-        <OperationalIntelligence />
-        <Contact />
+        <Problem />
+        <Vision />
+        <Product />
+        <WhyNow />
+        <Market />
+        <WhyUs />
+        <Laboratory />
+        <CallToAction />
       </main>
-      <footer className="footer">
-        <div className="footer-content">
-          <p>&copy; 2026 OceanSchema. All Rights Reserved.</p>
-          <nav className="footer-links">
-            <a href="#privacy">Privacy</a>
-            <a href="#terms">Terms</a>
-          </nav>
-        </div>
-      </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

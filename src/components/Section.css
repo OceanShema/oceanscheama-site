@@ -8,7 +8,7 @@
 }
 
 .container {
-  max-width: 1100px; /* Increased max-width for two-column layout */
+  max-width: 1200px; /* Increased max-width for two-column layout */
   margin: 0 auto;
   background-color: rgba(10, 25, 47, 0.8); /* Keep semi-transparent dark background for readability */
   padding: 40px;
@@ -16,29 +16,44 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
-.partner-content {
+.partner-layout {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start; /* Align items to the top */
-  gap: 40px; /* Space between description and form */
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 40px;
+  flex-wrap: wrap;
 }
 
-.partner-description,
-.partner-form-wrapper {
-  flex: 1; /* Distribute space equally */
-  min-width: 300px; /* Minimum width before wrapping */
+.partner-box {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendly-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendly-container > div {
+  flex: 1;
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
-  .partner-content {
+@media (max-width: 992px) {
+  .partner-layout {
     flex-direction: column;
     align-items: center;
     gap: 30px;
   }
-  .partner-description,
-  .partner-form-wrapper {
+  .partner-box {
     min-width: unset;
     width: 100%;
   }

@@ -7,13 +7,17 @@ interface CalendlyEmbedProps {
 const CalendlyEmbed: React.FC<CalendlyEmbedProps> = ({ url }) => {
   useEffect(() => {
     const head = document.querySelector('head');
-    const script = document.createElement('script');
-    script.setAttribute('src', 'https://assets.calendly.com/assets/external/widget.js');
-    head.appendChild(script);
+    if (head) {
+        const script = document.createElement('script');
+        script.setAttribute('src', 'https://assets.calendly.com/assets/external/widget.js');
+        head.appendChild(script);
 
-    return () => {
-      head.removeChild(script);
-    };
+        return () => {
+            if (head.contains(script)) {
+                head.removeChild(script);
+            }
+        };
+    }
   }, []);
 
   return (
